@@ -400,6 +400,10 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 		Type:  types.IntType,
 		Usage: "number of worker nodes in zone C",
 	}
+	driverFlag.Options["image-id"] = &types.Flag{
+		Type:  types.StringType,
+		Usage: "image-id",
+	}
 
 	return &driverFlag, nil
 }
