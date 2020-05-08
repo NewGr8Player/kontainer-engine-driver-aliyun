@@ -81,7 +81,7 @@ type state struct {
 	WorkerDataDiskSize       int64  `json:"worker_data_disk_size,omitempty"`
 	NumOfNodes               int64  `json:"num_of_nodes,omitempty"`
 	SnatEntry                bool   `json:"snat_entry,omitempty"`
-	ImageId                  string `json:"image_id,omitempty"`
+	ImageID                  string `json:"image_id,omitempty"`
 	// non-managed Kubernetes fields
 	SSHFlags                 bool   `json:"ssh_flags,omitempty"`
 	MasterInstanceChargeType string `json:"master_instance_charge_type,omitempty"`
@@ -456,7 +456,7 @@ func getStateFromOpts(driverOptions *types.DriverOptions) (*state, error) {
 	d.WorkerDataDiskSize = options.GetValueFromDriverOptions(driverOptions, types.IntType, "worker-data-disk-size", "workerDataDiskSize").(int64)
 	d.NumOfNodes = options.GetValueFromDriverOptions(driverOptions, types.IntType, "num-of-nodes", "numOfNodes").(int64)
 	d.SnatEntry = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "snat-entry", "snatEntry").(bool)
-	d.ImageId = options.GetValueFromDriverOptions(driverOptions, types.StringType, "image-id", "imageId").(string)
+	d.ImageID = options.GetValueFromDriverOptions(driverOptions, types.StringType, "image-id", "imageID").(string)
 
 	d.SSHFlags = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "ssh-flags", "sshFlags").(bool)
 	d.MasterInstanceChargeType = options.GetValueFromDriverOptions(driverOptions, types.StringType, "master-instance-charge-type", "masterInstanceChargeType").(string)
