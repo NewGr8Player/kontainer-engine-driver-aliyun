@@ -81,6 +81,7 @@ type state struct {
 	WorkerDataDiskSize       int64  `json:"worker_data_disk_size,omitempty"`
 	NumOfNodes               int64  `json:"num_of_nodes,omitempty"`
 	SnatEntry                bool   `json:"snat_entry,omitempty"`
+	ImageId                  string `json:"image_id,omitempty"`
 	// non-managed Kubernetes fields
 	SSHFlags                 bool   `json:"ssh_flags,omitempty"`
 	MasterInstanceChargeType string `json:"master_instance_charge_type,omitempty"`
