@@ -81,7 +81,11 @@ type state struct {
 	WorkerDataDiskSize       int64  `json:"worker_data_disk_size,omitempty"`
 	NumOfNodes               int64  `json:"num_of_nodes,omitempty"`
 	SnatEntry                bool   `json:"snat_entry,omitempty"`
-	ImageID                  string `json:"image_id,omitempty"`
+	OsType                   string `json:"os_type,omitempty"`
+	Platform                 string `json:"platform,omitempty"`
+	EndpointPublicAccess     bool   `json:"endpoint_public_access,omitempty"`
+	NodeCidrMask             int64  `json:"node_cidr_mask,omitempty"`
+	ProxyMode                string `json:"proxy_mode,omitempty"`
 	// non-managed Kubernetes fields
 	SSHFlags                 bool   `json:"ssh_flags,omitempty"`
 	MasterInstanceChargeType string `json:"master_instance_charge_type,omitempty"`
@@ -400,9 +404,28 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 		Type:  types.IntType,
 		Usage: "number of worker nodes in zone C",
 	}
-	driverFlag.Options["image-id"] = &types.Flag{
+	driverFlag.Options["os-type"] = &types.Flag{
 		Type:  types.StringType,
-		Usage: "image-id",
+		Usage: "Os-type of pods",
+	}
+	driverFlag.Options["platform"] = &types.Flag{
+		Type:  types.StringType,
+		Usage: "Platform architecture of the host running the pod",
+	}
+	driverFlag.Options["endpoint-public-access"] = &types.Flag{
+		Type:  types.BoolType,
+		Usage: "API Server on public",
+		Default: &types.Default{
+			DefaultBool: true,
+		},
+	}
+	driverFlag.Options["node-cidr-mask"] = &types.Flag{
+		Type:  types.StringType,
+		Usage: "Num of pods in each node",
+	}
+	driverFlag.Options["proxy-mode"] = &types.Flag{
+		Type:  types.StringType,
+		Usage: "Proxy mode,iptables or IPVS,default iptables",
 	}
 
 	return &driverFlag, nil
@@ -456,7 +479,11 @@ func getStateFromOpts(driverOptions *types.DriverOptions) (*state, error) {
 	d.WorkerDataDiskSize = options.GetValueFromDriverOptions(driverOptions, types.IntType, "worker-data-disk-size", "workerDataDiskSize").(int64)
 	d.NumOfNodes = options.GetValueFromDriverOptions(driverOptions, types.IntType, "num-of-nodes", "numOfNodes").(int64)
 	d.SnatEntry = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "snat-entry", "snatEntry").(bool)
-	d.ImageID = options.GetValueFromDriverOptions(driverOptions, types.StringType, "image-id", "imageId").(string)
+	d.OsType = options.GetValueFromDriverOptions(driverOptions, types.StringType, "os-type", "osType").(string)
+	d.Platform = options.GetValueFromDriverOptions(driverOptions, types.StringType, "platform", "platform").(string)
+	d.EndpointPublicAccess = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "endpoint-public-access", "endpointPublicAccess").(bool)
+	d.NodeCidrMask = options.GetValueFromDriverOptions(driverOptions, types.IntType, "node-cidr-mask", "nodeCidrMask").(int64)
+	d.ProxyMode = options.GetValueFromDriverOptions(driverOptions, types.StringType, "proxy-mode", "proxyMode").(string)
 
 	d.SSHFlags = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "ssh-flags", "sshFlags").(bool)
 	d.MasterInstanceChargeType = options.GetValueFromDriverOptions(driverOptions, types.StringType, "master-instance-charge-type", "masterInstanceChargeType").(string)
