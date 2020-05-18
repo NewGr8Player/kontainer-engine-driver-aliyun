@@ -81,8 +81,6 @@ type state struct {
 	WorkerDataDiskSize       int64  `json:"worker_data_disk_size,omitempty"`
 	NumOfNodes               int64  `json:"num_of_nodes,omitempty"`
 	SnatEntry                bool   `json:"snat_entry,omitempty"`
-	OsType                   string `json:"os_type,omitempty"`
-	Platform                 string `json:"platform,omitempty"`
 	EndpointPublicAccess     bool   `json:"endpoint_public_access,omitempty"`
 	NodeCidrMask             int64  `json:"node_cidr_mask,omitempty"`
 	ProxyMode                string `json:"proxy_mode,omitempty"`
@@ -100,6 +98,8 @@ type state struct {
 	MasterDataDiskCategory   string `json:"master_data_disk_category,omitempty"`
 	MasterDataDiskSize       int64  `json:"master_data_disk_size,omitempty"`
 	PublicSlb                bool   `json:"public_slb,omitempty"`
+	OsType                   string `json:"os_type,omitempty"`
+	Platform                 string `json:"platform,omitempty"`
 	// multi-az kubernetes options
 	MultiAz             bool   `json:"multi_az,omitempty"`
 	VswitchIDA          string `json:"vswitch_id_a,omitempty"`
@@ -117,6 +117,11 @@ type state struct {
 
 	// cluster info
 	ClusterInfo types.ClusterInfo
+}
+
+type addons struct {
+	Name   string `json:"name"`
+	Config string `json:"config,omitempty"`
 }
 
 type clusterGetResponse struct {
@@ -427,7 +432,6 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 		Type:  types.StringType,
 		Usage: "Proxy mode,iptables or IPVS,default iptables",
 	}
-
 	return &driverFlag, nil
 }
 
