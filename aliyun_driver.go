@@ -97,7 +97,6 @@ type state struct {
 	MasterDataDisk           bool   `json:"master_data_disk,omitempty"`
 	MasterDataDiskCategory   string `json:"master_data_disk_category,omitempty"`
 	MasterDataDiskSize       int64  `json:"master_data_disk_size,omitempty"`
-	PublicSlb                bool   `json:"public_slb,omitempty"`
 	OsType                   string `json:"os_type,omitempty"`
 	Platform                 string `json:"platform,omitempty"`
 
@@ -339,10 +338,6 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 		Type:  types.IntType,
 		Usage: "Data disk size",
 	}
-	driverFlag.Options["public-slb"] = &types.Flag{
-		Type:  types.BoolType,
-		Usage: "Whether or not to create SLB to the API server",
-	}
 	driverFlag.Options["os-type"] = &types.Flag{
 		Type:  types.StringType,
 		Usage: "Os-type of pods",
@@ -354,9 +349,6 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 	driverFlag.Options["endpoint-public-access"] = &types.Flag{
 		Type:  types.BoolType,
 		Usage: "API Server on public",
-		Default: &types.Default{
-			DefaultBool: true,
-		},
 	}
 	driverFlag.Options["node-cidr-mask"] = &types.Flag{
 		Type:  types.StringType,
@@ -435,7 +427,6 @@ func getStateFromOpts(driverOptions *types.DriverOptions) (*state, error) {
 	d.MasterDataDisk = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "master-data-disk", "masterDataDisk").(bool)
 	d.MasterDataDiskCategory = options.GetValueFromDriverOptions(driverOptions, types.StringType, "master-data-disk-category", "masterDataDiskCategory").(string)
 	d.MasterDataDiskSize = options.GetValueFromDriverOptions(driverOptions, types.IntType, "master-data-disk-size", "masterDataDiskSize").(int64)
-	d.PublicSlb = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "public-slb", "publicSlb").(bool)
 
 	return d, d.validate()
 }
