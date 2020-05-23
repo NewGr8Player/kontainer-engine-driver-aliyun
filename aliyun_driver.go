@@ -355,7 +355,7 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 		Type:  types.BoolType,
 		Usage: "API Server on public",
 		Default: &types.Default{
-			DefaultBool: false,
+			DefaultBool: true,
 		},
 	}
 	driverFlag.Options["node-cidr-mask"] = &types.Flag{
@@ -436,7 +436,7 @@ func getStateFromOpts(driverOptions *types.DriverOptions) (*state, error) {
 	d.MasterDataDiskCategory = options.GetValueFromDriverOptions(driverOptions, types.StringType, "master-data-disk-category", "masterDataDiskCategory").(string)
 	d.MasterDataDiskSize = options.GetValueFromDriverOptions(driverOptions, types.IntType, "master-data-disk-size", "masterDataDiskSize").(int64)
 	d.PublicSlb = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "public-slb", "publicSlb").(bool)
-
+	logrus.Printf("NOTICE_ME:%+v", d)
 	return d, d.validate()
 }
 
