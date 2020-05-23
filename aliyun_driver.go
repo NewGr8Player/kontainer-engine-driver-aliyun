@@ -354,9 +354,6 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 	driverFlag.Options["endpoint-public-access"] = &types.Flag{
 		Type:  types.BoolType,
 		Usage: "API Server on public",
-		Default: &types.Default{
-			DefaultBool: true,
-		},
 	}
 	driverFlag.Options["node-cidr-mask"] = &types.Flag{
 		Type:  types.StringType,
