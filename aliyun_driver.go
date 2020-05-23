@@ -52,54 +52,50 @@ type state struct {
 	// The displays name of the cluster
 	Name string `json:"name,omitempty"`
 	//Common fields
-	ClusterID                string `json:"cluster_id,omitempty"`
-	AccessKeyID              string `json:"accessKeyId,omitempty"`
-	AccessKeySecret          string `json:"accessKeySecret,omitempty"`
-	DisableRollback          bool   `json:"disable_rollback,omitempty"`
-	ClusterType              string `json:"cluster_type,omitempty"`
-	KubernetesVersion        string `json:"kubernetes_version,omitempty"`
-	TimeoutMins              int64  `json:"timeout_mins,omitempty"`
-	RegionID                 string `json:"region_id,omitempty"`
-	VpcID                    string `json:"vpcid,omitempty"`
-	ZoneID                   string `json:"zoneid,omitempty"`
-	VswitchID                string `json:"vswitchid,omitempty"`
-	ContainerCidr            string `json:"container_cidr,omitempty"`
-	ServiceCidr              string `json:"service_cidr,omitempty"`
-	CloudMonitorFlags        bool   `json:"cloud_monitor_flags,omitempty"`
-	LoginPassword            string `json:"login_password,omitempty"`
-	KeyPair                  string `json:"key_pair,omitempty"`
-	WorkerInstanceChargeType string `json:"worker_instance_charge_type,omitempty"`
-	WorkerPeriod             int64  `json:"worker_period,omitempty"`
-	WorkerPeriodUnit         string `json:"worker_period_unit,omitempty"`
-	WorkerAutoRenew          bool   `json:"worker_auto_renew,omitempty"`
-	WorkerAutoRenewPeriod    int64  `json:"worker_auto_renew_period,omitempty"`
-	WorkerInstanceType       string `json:"worker_instance_type,omitempty"`
-	WorkerSystemDiskCategory string `json:"worker_system_disk_category,omitempty"`
-	WorkerSystemDiskSize     int64  `json:"worker_system_disk_size,omitempty"`
-	WorkerDataDisk           bool   `json:"worker_data_disk,omitempty"`
-	WorkerDataDiskCategory   string `json:"worker_data_disk_category,omitempty"`
-	WorkerDataDiskSize       int64  `json:"worker_data_disk_size,omitempty"`
-	NumOfNodes               int64  `json:"num_of_nodes,omitempty"`
-	SnatEntry                bool   `json:"snat_entry,omitempty"`
-	NodeCidrMask             int64  `json:"node_cidr_mask,omitempty"`
-	ProxyMode                string `json:"proxy_mode,omitempty"`
-	EndpointPublicAccess     bool   `json:"endpoint_public_access,omitempty"`
+	ClusterID                string     `json:"cluster_id,omitempty"`
+	AccessKeyID              string     `json:"accessKeyId,omitempty"`
+	AccessKeySecret          string     `json:"accessKeySecret,omitempty"`
+	DisableRollback          bool       `json:"disable_rollback"`
+	ClusterType              string     `json:"cluster_type,omitempty"`
+	KubernetesVersion        string     `json:"kubernetes_version,omitempty"`
+	TimeoutMins              int64      `json:"timeout_mins,omitempty"`
+	RegionID                 string     `json:"region_id,omitempty"`
+	VpcID                    string     `json:"vpcid,omitempty"`
+	ZoneID                   string     `json:"zoneid,omitempty"`
+	ContainerCidr            string     `json:"container_cidr,omitempty"`
+	ServiceCidr              string     `json:"service_cidr,omitempty"`
+	CloudMonitorFlags        bool       `json:"cloud_monitor_flags"`
+	LoginPassword            string     `json:"login_password,omitempty"`
+	KeyPair                  string     `json:"key_pair,omitempty"`
+	WorkerInstanceChargeType string     `json:"worker_instance_charge_type,omitempty"`
+	WorkerPeriod             int64      `json:"worker_period,omitempty"`
+	WorkerPeriodUnit         string     `json:"worker_period_unit,omitempty"`
+	WorkerAutoRenew          bool       `json:"worker_auto_renew"`
+	WorkerAutoRenewPeriod    int64      `json:"worker_auto_renew_period,omitempty"`
+	WorkerSystemDiskCategory string     `json:"worker_system_disk_category,omitempty"`
+	WorkerSystemDiskSize     int64      `json:"worker_system_disk_size,omitempty"`
+	NumOfNodes               int64      `json:"num_of_nodes,omitempty"`
+	SnatEntry                bool       `json:"snat_entry"`
+	NodeCidrMask             int64      `json:"node_cidr_mask,omitempty"`
+	ProxyMode                string     `json:"proxy_mode,omitempty"`
+	EndpointPublicAccess     bool       `json:"endpoint_public_access"`
+	WorkerInstanceTypes      []string   `json:"worker_instance_types,omitempty"`
+	WorkerVswitchIds         []string   `json:"worker_vswitch_ids,omitempty"`
+	WorkerDataDisks          []diskInfo `json:"worker_data_disks,omitempty"`
+	SecurityGroupId          string     `json:"security_group_id,omitempty"`
 	// non-managed Kubernetes fields
-	SSHFlags                 bool   `json:"ssh_flags,omitempty"`
-	MasterInstanceChargeType string `json:"master_instance_charge_type,omitempty"`
-	MasterPeriod             int64  `json:"master_period,omitempty"`
-	MasterPeriodUnit         string `json:"master_period_unit,omitempty"`
-	MasterAutoRenew          bool   `json:"master_auto_renew,omitempty"`
-	MasterAutoRenewPeriod    int64  `json:"master_auto_renew_period,omitempty"`
-	MasterInstanceType       string `json:"master_instance_type,omitempty"`
-	MasterSystemDiskCategory string `json:"master_system_disk_category,omitempty"`
-	MasterSystemDiskSize     int64  `json:"master_system_disk_size,omitempty"`
-	MasterDataDisk           bool   `json:"master_data_disk,omitempty"`
-	MasterDataDiskCategory   string `json:"master_data_disk_category,omitempty"`
-	MasterDataDiskSize       int64  `json:"master_data_disk_size,omitempty"`
-	PublicSlb                bool   `json:"public_slb,omitempty"`
-	OsType                   string `json:"os_type,omitempty"`
-	Platform                 string `json:"platform,omitempty"`
+	SSHFlags                 bool     `json:"ssh_flags"`
+	MasterVswitchIds         []string `json:"master_vswitch_ids,omitempty"`
+	MasterInstanceTypes      []string `json:"master_instance_types,omitempty"`
+	MasterInstanceChargeType string   `json:"master_instance_charge_type,omitempty"`
+	MasterPeriod             int64    `json:"master_period,omitempty"`
+	MasterPeriodUnit         string   `json:"master_period_unit,omitempty"`
+	MasterAutoRenew          bool     `json:"master_auto_renew"`
+	MasterAutoRenewPeriod    int64    `json:"master_auto_renew_period,omitempty"`
+	MasterSystemDiskCategory string   `json:"master_system_disk_category,omitempty"`
+	MasterSystemDiskSize     int64    `json:"master_system_disk_size,omitempty"`
+	OsType                   string   `json:"os_type,omitempty"`
+	Platform                 string   `json:"platform,omitempty"`
 
 	// cluster info
 	ClusterInfo types.ClusterInfo
@@ -108,6 +104,12 @@ type state struct {
 type addons struct {
 	Name   string `json:"name"`
 	Config string `json:"config,omitempty"`
+}
+
+type diskInfo struct {
+	Category  string `json:"category"`
+	Size      int64  `json:"size"`
+	Encrypted bool   `json:"encrypted"`
 }
 
 type clusterGetResponse struct {
@@ -180,6 +182,9 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 	driverFlag.Options["disable-rollback"] = &types.Flag{
 		Type:  types.BoolType,
 		Usage: "Whether or not to roll back if the cluster fails to be created",
+		Default: &types.Default{
+			DefaultBool: true,
+		},
 	}
 	driverFlag.Options["cluster-type"] = &types.Flag{
 		Type:  types.StringType,
@@ -238,6 +243,9 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 	driverFlag.Options["worker-auto-renew"] = &types.Flag{
 		Type:  types.BoolType,
 		Usage: "Worker node auto renew",
+		Default: &types.Default{
+			DefaultBool: false,
+		},
 	}
 	driverFlag.Options["worker-auto-renew-period"] = &types.Flag{
 		Type:  types.IntType,
@@ -290,10 +298,16 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 	driverFlag.Options["cloud-monitor-flags"] = &types.Flag{
 		Type:  types.BoolType,
 		Usage: "Whether or not to install the cloud monitoring plug-in",
+		Default: &types.Default{
+			DefaultBool: false,
+		},
 	}
 	driverFlag.Options["ssh-flags"] = &types.Flag{
 		Type:  types.BoolType,
 		Usage: "Whether or not to enable SSH access for Internet",
+		Default: &types.Default{
+			DefaultBool: false,
+		},
 	}
 	driverFlag.Options["master-instance-charge-type"] = &types.Flag{
 		Type:  types.StringType,
@@ -310,6 +324,9 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 	driverFlag.Options["master-auto-renew"] = &types.Flag{
 		Type:  types.BoolType,
 		Usage: "Master node auto renew",
+		Default: &types.Default{
+			DefaultBool: false,
+		},
 	}
 	driverFlag.Options["master-auto-renew-period"] = &types.Flag{
 		Type:  types.IntType,
@@ -326,22 +343,6 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 	driverFlag.Options["master-system-disk-size"] = &types.Flag{
 		Type:  types.IntType,
 		Usage: "System disk size of master nodes",
-	}
-	driverFlag.Options["master-data-disk"] = &types.Flag{
-		Type:  types.BoolType,
-		Usage: "Whether or not to mount data disks",
-	}
-	driverFlag.Options["master-data-disk-category"] = &types.Flag{
-		Type:  types.StringType,
-		Usage: "Data disk category",
-	}
-	driverFlag.Options["master-data-disk-size"] = &types.Flag{
-		Type:  types.IntType,
-		Usage: "Data disk size",
-	}
-	driverFlag.Options["public-slb"] = &types.Flag{
-		Type:  types.BoolType,
-		Usage: "Whether or not to create SLB to the API server",
 	}
 	driverFlag.Options["os-type"] = &types.Flag{
 		Type:  types.StringType,
@@ -365,6 +366,29 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 	driverFlag.Options["proxy-mode"] = &types.Flag{
 		Type:  types.StringType,
 		Usage: "Proxy mode,iptables or IPVS,default iptables",
+		Default: &types.Default{
+			DefaultString: "iptables",
+		},
+	}
+	driverFlag.Options["master-instance-types"] = &types.Flag{
+		Type:  types.StringSliceType,
+		Usage: "Master instance types",
+	}
+	driverFlag.Options["worker-instance-types"] = &types.Flag{
+		Type:  types.StringSliceType,
+		Usage: "Worker instance types",
+	}
+	driverFlag.Options["master-vswitch-ids"] = &types.Flag{
+		Type:  types.StringSliceType,
+		Usage: "Master vswitch ids",
+	}
+	driverFlag.Options["worker-vswitch-ids"] = &types.Flag{
+		Type:  types.StringSliceType,
+		Usage: "Worker vswitch ids",
+	}
+	driverFlag.Options["SecurityGroupId"] = &types.Flag{
+		Type:  types.StringType,
+		Usage: "Same as ecs security group id",
 	}
 	return &driverFlag, nil
 }
@@ -398,7 +422,7 @@ func getStateFromOpts(driverOptions *types.DriverOptions) (*state, error) {
 	d.RegionID = options.GetValueFromDriverOptions(driverOptions, types.StringType, "region-id", "regionId").(string)
 	d.VpcID = options.GetValueFromDriverOptions(driverOptions, types.StringType, "vpc-id", "vpcId").(string)
 	d.ZoneID = options.GetValueFromDriverOptions(driverOptions, types.StringType, "zone-id", "zoneId").(string)
-	d.VswitchID = options.GetValueFromDriverOptions(driverOptions, types.StringType, "vswitch-id", "vswitchId").(string)
+
 	d.ContainerCidr = options.GetValueFromDriverOptions(driverOptions, types.StringType, "container-cidr", "containerCidr").(string)
 	d.ServiceCidr = options.GetValueFromDriverOptions(driverOptions, types.StringType, "service-cidr", "serviceCidr").(string)
 	d.CloudMonitorFlags = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "cloud-monitor-flags", "cloudMonitorFlags").(bool)
@@ -409,12 +433,8 @@ func getStateFromOpts(driverOptions *types.DriverOptions) (*state, error) {
 	d.WorkerPeriodUnit = options.GetValueFromDriverOptions(driverOptions, types.StringType, "worker-period-unit", "workerPeriodUnit").(string)
 	d.WorkerAutoRenew = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "worker-auto-renew", "workerAutoRenew").(bool)
 	d.WorkerAutoRenewPeriod = options.GetValueFromDriverOptions(driverOptions, types.IntType, "worker-auto-renew-period", "workerAutoRenewPeriod").(int64)
-	d.WorkerInstanceType = options.GetValueFromDriverOptions(driverOptions, types.StringType, "worker-instance-type", "workerInstanceType").(string)
 	d.WorkerSystemDiskCategory = options.GetValueFromDriverOptions(driverOptions, types.StringType, "worker-system-disk-category", "workerSystemDiskCategory").(string)
 	d.WorkerSystemDiskSize = options.GetValueFromDriverOptions(driverOptions, types.IntType, "worker-system-disk-size", "workerSystemDiskSize").(int64)
-	d.WorkerDataDisk = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "worker-data-disk", "workerDataDisk").(bool)
-	d.WorkerDataDiskCategory = options.GetValueFromDriverOptions(driverOptions, types.StringType, "worker-data-disk-category", "workerDataDiskCategory").(string)
-	d.WorkerDataDiskSize = options.GetValueFromDriverOptions(driverOptions, types.IntType, "worker-data-disk-size", "workerDataDiskSize").(int64)
 	d.NumOfNodes = options.GetValueFromDriverOptions(driverOptions, types.IntType, "num-of-nodes", "numOfNodes").(int64)
 	d.SnatEntry = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "snat-entry", "snatEntry").(bool)
 	d.OsType = options.GetValueFromDriverOptions(driverOptions, types.StringType, "os-type", "osType").(string)
@@ -429,13 +449,41 @@ func getStateFromOpts(driverOptions *types.DriverOptions) (*state, error) {
 	d.MasterPeriodUnit = options.GetValueFromDriverOptions(driverOptions, types.StringType, "master-period-unit", "masterPeriodUnit").(string)
 	d.MasterAutoRenew = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "master-auto-renew", "masterAutoRenew").(bool)
 	d.MasterAutoRenewPeriod = options.GetValueFromDriverOptions(driverOptions, types.IntType, "master-auto-renew-period", "masterAutoRenewPeriod").(int64)
-	d.MasterInstanceType = options.GetValueFromDriverOptions(driverOptions, types.StringType, "master-instance-type", "masterInstanceType").(string)
 	d.MasterSystemDiskCategory = options.GetValueFromDriverOptions(driverOptions, types.StringType, "master-system-disk-category", "masterSystemDiskCategory").(string)
 	d.MasterSystemDiskSize = options.GetValueFromDriverOptions(driverOptions, types.IntType, "master-system-disk-size", "masterSystemDiskSize").(int64)
-	d.MasterDataDisk = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "master-data-disk", "masterDataDisk").(bool)
-	d.MasterDataDiskCategory = options.GetValueFromDriverOptions(driverOptions, types.StringType, "master-data-disk-category", "masterDataDiskCategory").(string)
-	d.MasterDataDiskSize = options.GetValueFromDriverOptions(driverOptions, types.IntType, "master-data-disk-size", "masterDataDiskSize").(int64)
-	d.PublicSlb = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "public-slb", "publicSlb").(bool)
+
+	masterInstanceTypes := options.GetValueFromDriverOptions(driverOptions, types.StringSliceType, "master-instance-types", "masterInstanceTypes").(*types.StringSlice)
+	for _, masterInstanceType := range masterInstanceTypes.Value {
+		d.MasterInstanceTypes = append(d.MasterInstanceTypes, masterInstanceType)
+	}
+
+	masterVswitchIds := options.GetValueFromDriverOptions(driverOptions, types.StringSliceType, "master-vswitch-ids", "masterVswitchIds").(*types.StringSlice)
+	for _, masterVswitchId := range masterVswitchIds.Value {
+		d.MasterVswitchIds = append(d.MasterVswitchIds, masterVswitchId)
+	}
+
+	workerInstanceTypes := options.GetValueFromDriverOptions(driverOptions, types.StringSliceType, "worker-instance-types", "workerInstanceTypes").(*types.StringSlice)
+	for _, workerInstanceType := range workerInstanceTypes.Value {
+		d.WorkerInstanceTypes = append(d.WorkerInstanceTypes, workerInstanceType)
+	}
+
+	workerVswitchIds := options.GetValueFromDriverOptions(driverOptions, types.StringSliceType, "worker-vswitch-ids", "workerVswitchIds").(*types.StringSlice)
+	for _, workerVswitchId := range workerVswitchIds.Value {
+		d.WorkerVswitchIds = append(d.WorkerVswitchIds, workerVswitchId)
+	}
+
+	workerDataDisk := options.GetValueFromDriverOptions(driverOptions, types.BoolType, "worker-data-disk", "workerDataDisk").(bool)
+	if workerDataDisk {
+		WorkerDataDiskCategory := options.GetValueFromDriverOptions(driverOptions, types.StringType, "worker-data-disk-category", "workerDataDiskCategory").(string)
+		WorkerDataDiskSize := options.GetValueFromDriverOptions(driverOptions, types.IntType, "worker-data-disk-size", "workerDataDiskSize").(int64)
+		d.WorkerDataDisks = []diskInfo{
+			{
+				Category:  WorkerDataDiskCategory,
+				Size:      WorkerDataDiskSize,
+				Encrypted: false,
+			},
+		}
+	}
 
 	return d, d.validate()
 }
@@ -451,7 +499,7 @@ func (s *state) validate() error {
 		return fmt.Errorf("region id is required")
 	} else if s.ZoneID == "" {
 		return fmt.Errorf("zone id is required")
-	} else if s.WorkerInstanceType == "" {
+	} else if s.WorkerInstanceTypes == nil {
 		return fmt.Errorf("worker instance type is required")
 	} else if s.WorkerSystemDiskCategory == "" {
 		return fmt.Errorf("worker system disk category is required")
@@ -548,7 +596,7 @@ func scaleCluster(svc *cs.Client, state *state) error {
 	m := make(map[string]interface{})
 	m["disable_rollback"] = state.DisableRollback
 	m["timeout_mins"] = state.TimeoutMins
-	m["worker_instance_type"] = state.WorkerInstanceType
+	m["worker_instance_types"] = state.WorkerInstanceTypes
 	m["login_password"] = state.LoginPassword
 	m["num_of_nodes"] = state.NumOfNodes
 	b, err := json.Marshal(m)
