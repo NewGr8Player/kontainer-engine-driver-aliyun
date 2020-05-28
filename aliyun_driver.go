@@ -458,7 +458,8 @@ func (s *state) validate() error {
 	}
 	if s.EndpointPublicAccess == true {
 		return fmt.Errorf("EndpointPublicAccess is true")
-	} else {
+	}
+	if s.EndpointPublicAccess == false {
 		return fmt.Errorf("EndpointPublicAccess is false")
 	}
 	return nil
