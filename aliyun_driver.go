@@ -349,9 +349,6 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 	driverFlag.Options["endpoint-public-access"] = &types.Flag{
 		Type:  types.BoolType,
 		Usage: "API Server on public",
-		Default: &types.Default{
-			DefaultBool: true,
-		},
 	}
 	driverFlag.Options["node-cidr-mask"] = &types.Flag{
 		Type:  types.StringType,
@@ -458,6 +455,11 @@ func (s *state) validate() error {
 		return fmt.Errorf("snat entry is required when vpc is auto created")
 	} else if s.WorkerInstanceChargeType == "PrePaid" && s.WorkerPeriodUnit == "" {
 		return fmt.Errorf("worker period unit is required for prepaid mode")
+	}
+	if s.EndpointPublicAccess == true {
+		return fmt.Errorf("EndpointPublicAccess is true")
+	} else {
+		return fmt.Errorf("EndpointPublicAccess is false")
 	}
 	return nil
 }
@@ -636,8 +638,6 @@ func (d *Driver) Create(ctx context.Context, opts *types.DriverOptions, _ *types
 	if err != nil {
 		return info, err
 	}
-	// TODO DELETE THIS LOG
-	log.Infof(ctx, "NOTICE_ME:%+v", state)
 	cluster, err := createCluster(svc, state)
 	if err != nil && !strings.Contains(err.Error(), "AlreadyExist") {
 		return info, err
