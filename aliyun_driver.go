@@ -636,7 +636,8 @@ func (d *Driver) Create(ctx context.Context, opts *types.DriverOptions, _ *types
 	if err != nil {
 		return info, err
 	}
-
+	// TODO DELETE THIS LOG
+	log.Infof(ctx, "NOTICE_ME:%+v", state)
 	cluster, err := createCluster(svc, state)
 	if err != nil && !strings.Contains(err.Error(), "AlreadyExist") {
 		return info, err
