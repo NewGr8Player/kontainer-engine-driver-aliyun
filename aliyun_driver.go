@@ -517,10 +517,10 @@ func createCluster(svc *cs.Client, state *state) (*clusterCreateResponse, error)
 	}
 	request.SetContent(content)
 	cluster := &clusterCreateResponse{}
-	if err := ProcessRequest(svc, request, cluster); err != nil {
-		return nil, err
-	}
-	return cluster, nil
+	//if err := ProcessRequest(svc, request, cluster); err != nil {
+	//	return nil, err
+	//}
+	return cluster, fmt.Errorf("AlreadyExist EndpointPublicAccess is %t", state.EndpointPublicAccess)
 }
 
 func getCluster(svc *cs.Client, state *state) (*clusterGetResponse, error) {
@@ -630,14 +630,10 @@ func (d *Driver) Create(ctx context.Context, opts *types.DriverOptions, _ *types
 	defer storeState(info, state)
 
 	svc, err := getAliyunServiceClient(state)
-	// TODO DELETE THIS BLOCK
-	if ctx != nil {
-		return info, fmt.Errorf("EndpointPublicAccess is %t", state.EndpointPublicAccess)
-	}
-	// ABOVE <-
 	if err != nil {
 		return info, err
 	}
+
 	cluster, err := createCluster(svc, state)
 	if err != nil && !strings.Contains(err.Error(), "AlreadyExist") {
 		return info, err
