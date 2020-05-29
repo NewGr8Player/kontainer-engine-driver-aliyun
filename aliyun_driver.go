@@ -631,7 +631,7 @@ func (d *Driver) Create(ctx context.Context, opts *types.DriverOptions, _ *types
 	defer storeState(info, state)
 
 	_, err = getAliyunServiceClient(state)
-	return info, fmt.Errorf("%t", state.EndpointPublicAccess)
+	return info, fmt.Errorf("EndpointPublicAccess is %t", state.EndpointPublicAccess)
 	//if err != nil {
 	//	return info, err
 	//}
