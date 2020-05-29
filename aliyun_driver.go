@@ -630,8 +630,8 @@ func (d *Driver) Create(ctx context.Context, opts *types.DriverOptions, _ *types
 	info := &types.ClusterInfo{}
 	defer storeState(info, state)
 
-	return info, fmt.Errorf("EndpointPublicAccess is %t", state.EndpointPublicAccess)
-	//svc, err := getAliyunServiceClient(state)
+	_, err = getAliyunServiceClient(state)
+	return info, fmt.Errorf("%t", state.EndpointPublicAccess)
 	//if err != nil {
 	//	return info, err
 	//}
