@@ -349,6 +349,9 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 	driverFlag.Options["endpoint-public-access"] = &types.Flag{
 		Type:  types.BoolType,
 		Usage: "API Server on public",
+		Default: &types.Default{
+			DefaultBool: true,
+		},
 	}
 	driverFlag.Options["node-cidr-mask"] = &types.Flag{
 		Type:  types.StringType,
@@ -626,29 +629,31 @@ func (d *Driver) Create(ctx context.Context, opts *types.DriverOptions, _ *types
 	if err != nil {
 		return nil, err
 	}
-
+	log.Infof(ctx, "LINE-632:EndpointPublicAccess is %t", state.EndpointPublicAccess)
 	info := &types.ClusterInfo{}
 	defer storeState(info, state)
 
-	_, err = getAliyunServiceClient(state)
-	return info, fmt.Errorf("EndpointPublicAccess is %t", state.EndpointPublicAccess)
-	//if err != nil {
-	//	return info, err
-	//}
-	//
-	//cluster, err := createCluster(svc, state)
-	//if err != nil && !strings.Contains(err.Error(), "AlreadyExist") {
-	//	return info, err
-	//}
-	//if err == nil {
-	//	state.ClusterID = cluster.ClusterID
-	//}
-	//
-	//if err := d.waitAliyunCluster(ctx, svc, state); err != nil {
-	//	return info, err
-	//}
-	//
-	//return info, nil
+	log.Infof(ctx, "LINE-636:EndpointPublicAccess is %t", state.EndpointPublicAccess)
+	svc, err := getAliyunServiceClient(state)
+	if err != nil {
+		return info, err
+	}
+	log.Infof(ctx, "LINE-641:EndpointPublicAccess is %t", state.EndpointPublicAccess)
+	cluster, err := createCluster(svc, state)
+	if err != nil && !strings.Contains(err.Error(), "AlreadyExist") {
+		return info, err
+	}
+	if err == nil {
+		state.ClusterID = cluster.ClusterID
+	}
+
+	log.Infof(ctx, "LINE-650:EndpointPublicAccess is %t", state.EndpointPublicAccess)
+	if err := d.waitAliyunCluster(ctx, svc, state); err != nil {
+		return info, err
+	}
+
+	log.Infof(ctx, "LINE-655:EndpointPublicAccess is %t", state.EndpointPublicAccess)
+	return info, nil
 }
 
 func storeState(info *types.ClusterInfo, state *state) error {
