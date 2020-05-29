@@ -456,7 +456,7 @@ func (s *state) validate() error {
 	} else if s.WorkerInstanceChargeType == "PrePaid" && s.WorkerPeriodUnit == "" {
 		return fmt.Errorf("worker period unit is required for prepaid mode")
 	}
-	return fmt.Errorf("EndpointPublicAccess is %t ", s.EndpointPublicAccess)
+	return nil
 }
 
 func getAliyunServiceClient(state *state) (*cs.Client, error) {
@@ -630,6 +630,11 @@ func (d *Driver) Create(ctx context.Context, opts *types.DriverOptions, _ *types
 	defer storeState(info, state)
 
 	svc, err := getAliyunServiceClient(state)
+	// TODO DELETE THIS BLOCK
+	if ctx != nil {
+		return info, fmt.Errorf("EndpointPublicAccess is %t", state.EndpointPublicAccess)
+	}
+	// ABOVE <-
 	if err != nil {
 		return info, err
 	}
