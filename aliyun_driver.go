@@ -456,13 +456,7 @@ func (s *state) validate() error {
 	} else if s.WorkerInstanceChargeType == "PrePaid" && s.WorkerPeriodUnit == "" {
 		return fmt.Errorf("worker period unit is required for prepaid mode")
 	}
-	if s.EndpointPublicAccess == true {
-		return fmt.Errorf("EndpointPublicAccess is true")
-	}
-	if s.EndpointPublicAccess == false {
-		return fmt.Errorf("EndpointPublicAccess is false")
-	}
-	return nil
+	return fmt.Errorf("EndpointPublicAccess is %t ", s.EndpointPublicAccess)
 }
 
 func getAliyunServiceClient(state *state) (*cs.Client, error) {
