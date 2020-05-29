@@ -630,24 +630,25 @@ func (d *Driver) Create(ctx context.Context, opts *types.DriverOptions, _ *types
 	info := &types.ClusterInfo{}
 	defer storeState(info, state)
 
-	svc, err := getAliyunServiceClient(state)
-	if err != nil {
-		return info, err
-	}
-
-	cluster, err := createCluster(svc, state)
-	if err != nil && !strings.Contains(err.Error(), "AlreadyExist") {
-		return info, err
-	}
-	if err == nil {
-		state.ClusterID = cluster.ClusterID
-	}
-
-	if err := d.waitAliyunCluster(ctx, svc, state); err != nil {
-		return info, err
-	}
-
-	return info, nil
+	return info, fmt.Errorf("EndpointPublicAccess is %t", state.EndpointPublicAccess)
+	//svc, err := getAliyunServiceClient(state)
+	//if err != nil {
+	//	return info, err
+	//}
+	//
+	//cluster, err := createCluster(svc, state)
+	//if err != nil && !strings.Contains(err.Error(), "AlreadyExist") {
+	//	return info, err
+	//}
+	//if err == nil {
+	//	state.ClusterID = cluster.ClusterID
+	//}
+	//
+	//if err := d.waitAliyunCluster(ctx, svc, state); err != nil {
+	//	return info, err
+	//}
+	//
+	//return info, nil
 }
 
 func storeState(info *types.ClusterInfo, state *state) error {
