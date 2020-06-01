@@ -82,7 +82,7 @@ type state struct {
 	WorkerInstanceTypes      []string   `json:"worker_instance_types,omitempty"`
 	WorkerVswitchIds         []string   `json:"worker_vswitch_ids,omitempty"`
 	WorkerDataDisks          []diskInfo `json:"worker_data_disks,omitempty"`
-	SecurityGroupId          string     `json:"security_group_id,omitempty"`
+	SecurityGroupID          string     `json:"security_group_id,omitempty"`
 	// non-managed Kubernetes fields
 	SSHFlags                 bool     `json:"ssh_flags"`
 	MasterVswitchIds         []string `json:"master_vswitch_ids,omitempty"`
@@ -458,8 +458,8 @@ func getStateFromOpts(driverOptions *types.DriverOptions) (*state, error) {
 	}
 
 	masterVswitchIds := options.GetValueFromDriverOptions(driverOptions, types.StringSliceType, "master-vswitch-ids", "masterVswitchIds").(*types.StringSlice)
-	for _, masterVswitchId := range masterVswitchIds.Value {
-		d.MasterVswitchIds = append(d.MasterVswitchIds, masterVswitchId)
+	for _, masterVswitchID := range masterVswitchIds.Value {
+		d.MasterVswitchIds = append(d.MasterVswitchIds, masterVswitchID)
 	}
 
 	workerInstanceTypes := options.GetValueFromDriverOptions(driverOptions, types.StringSliceType, "worker-instance-types", "workerInstanceTypes").(*types.StringSlice)
@@ -468,8 +468,8 @@ func getStateFromOpts(driverOptions *types.DriverOptions) (*state, error) {
 	}
 
 	workerVswitchIds := options.GetValueFromDriverOptions(driverOptions, types.StringSliceType, "worker-vswitch-ids", "workerVswitchIds").(*types.StringSlice)
-	for _, workerVswitchId := range workerVswitchIds.Value {
-		d.WorkerVswitchIds = append(d.WorkerVswitchIds, workerVswitchId)
+	for _, workerVswitchID := range workerVswitchIds.Value {
+		d.WorkerVswitchIds = append(d.WorkerVswitchIds, workerVswitchID)
 	}
 
 	workerDataDisk := options.GetValueFromDriverOptions(driverOptions, types.BoolType, "worker-data-disk", "workerDataDisk").(bool)
