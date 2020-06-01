@@ -386,7 +386,7 @@ func (d *Driver) GetDriverCreateOptions(ctx context.Context) (*types.DriverFlags
 		Type:  types.StringSliceType,
 		Usage: "Worker vswitch ids",
 	}
-	driverFlag.Options["SecurityGroupId"] = &types.Flag{
+	driverFlag.Options["security-group-id"] = &types.Flag{
 		Type:  types.StringType,
 		Usage: "Same as ecs security group id",
 	}
@@ -443,6 +443,7 @@ func getStateFromOpts(driverOptions *types.DriverOptions) (*state, error) {
 	d.NodeCidrMask = options.GetValueFromDriverOptions(driverOptions, types.IntType, "node-cidr-mask", "nodeCidrMask").(int64)
 	d.ProxyMode = options.GetValueFromDriverOptions(driverOptions, types.StringType, "proxy-mode", "proxyMode").(string)
 
+	d.SecurityGroupID = options.GetValueFromDriverOptions(driverOptions, types.StringType, "security-group-id", "securityGroupId").(string)
 	d.SSHFlags = options.GetValueFromDriverOptions(driverOptions, types.BoolType, "ssh-flags", "sshFlags").(bool)
 	d.MasterInstanceChargeType = options.GetValueFromDriverOptions(driverOptions, types.StringType, "master-instance-charge-type", "masterInstanceChargeType").(string)
 	d.MasterPeriod = options.GetValueFromDriverOptions(driverOptions, types.IntType, "master-period", "masterPeriod").(int64)
